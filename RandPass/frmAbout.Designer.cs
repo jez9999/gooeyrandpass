@@ -29,7 +29,7 @@
 			this.lblLicence = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.txtGplLicence = new System.Windows.Forms.TextBox();
-			this.label2 = new System.Windows.Forms.Label();
+			this.lnkGooeySite = new System.Windows.Forms.LinkLabel();
 			((System.ComponentModel.ISupportInitialize)(this.picGooeyLogo)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -87,22 +87,24 @@
 			this.txtGplLicence.TabStop = false;
 			this.txtGplLicence.Text = resources.GetString("txtGplLicence.Text");
 			// 
-			// label2
+			// lnkGooeySite
 			// 
-			this.label2.AutoSize = true;
-			this.label2.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label2.Location = new System.Drawing.Point(143, 509);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(175, 14);
-			this.label2.TabIndex = 9;
-			this.label2.Text = "Copyright © Gooey Software 2012";
+			this.lnkGooeySite.AutoSize = true;
+			this.lnkGooeySite.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lnkGooeySite.Location = new System.Drawing.Point(180, 509);
+			this.lnkGooeySite.Name = "lnkGooeySite";
+			this.lnkGooeySite.Size = new System.Drawing.Size(138, 14);
+			this.lnkGooeySite.TabIndex = 10;
+			this.lnkGooeySite.TabStop = true;
+			this.lnkGooeySite.Text = "www.gooeysoftware.com";
+			this.lnkGooeySite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGooeySite_LinkClicked);
 			// 
 			// frmAbout
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(329, 528);
-			this.Controls.Add(this.label2);
+			this.Controls.Add(this.lnkGooeySite);
 			this.Controls.Add(this.txtGplLicence);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.lblLicence);
@@ -115,6 +117,7 @@
 			this.Name = "frmAbout";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "About...";
+			this.Load += new System.EventHandler(this.frmAbout_Load);
 			((System.ComponentModel.ISupportInitialize)(this.picGooeyLogo)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -128,6 +131,6 @@
 		private System.Windows.Forms.Label lblLicence;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TextBox txtGplLicence;
-		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.LinkLabel lnkGooeySite;
 	}
 }

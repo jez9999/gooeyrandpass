@@ -12,5 +12,15 @@ namespace RandPass {
 		public frmAbout() {
 			InitializeComponent();
 		}
+
+		private void frmAbout_Load(object sender, EventArgs e) {
+			// Prevent tabstop for link to website (property is unavailable in Visual Studio designer!)
+			lnkGooeySite.TabStop = false;
+		}
+
+		private void lnkGooeySite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs ea) {
+			// Navigate to Gooey Software website
+			System.Diagnostics.Process.Start("http://www.gooeysoftware.com/");
+		}
 	}
 }

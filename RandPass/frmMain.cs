@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using Gooey;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Drawing;
 
 namespace RandPass {
 	public partial class frmMain : Form {
@@ -79,6 +78,48 @@ namespace RandPass {
 			// One checkbox MUST be selected
 			if (!chkCapLetters.Checked && !chkSmlLetters.Checked && !chkNumbers.Checked) {
 				boxChanged.Checked = true;
+			}
+		}
+
+		/// <summary>
+		/// Generates a "simple" password, based on the contents of the "simple" tab, or an error string
+		/// explaining the problem generating the password if there was a problem.
+		/// </summary>
+		/// <param name="txtPassTag">The value to assign to the password box's Tag property to indicate whether password generation was successful.</param>
+		/// <returns>If successful, the generated password; otherwise, an error string.</returns>
+		private string generateSimplePassword(out object txtPassTag) {
+			txtPassTag = "";
+
+			try {
+				uint passLength;
+				if (!uint.TryParse((txtPassLength.Text == "" ? "0" : txtPassLength.Text), out passLength)) {
+					throw new Exception("Couldn't parse password length '" + txtPassLength.Text + "' as an integer!");
+				}
+				txtPassTag = new PassGenerationResult { Successful = true };
+				return _passGen.GeneratePassword((passLength == 0 ? 1 : passLength), chkCapLetters.Checked, chkSmlLetters.Checked, chkNumbers.Checked);
+			}
+			catch (Exception ex) {
+				txtPassTag = new PassGenerationResult { Successful = false };
+				return "Error generating password: " + ex.Message;
+			}
+		}
+
+		/// <summary>
+		/// Generates an "advanced" password, based on the contents of the "advanced" tab, or an error string
+		/// explaining the problem generating the password if there was a problem.
+		/// </summary>
+		/// <param name="txtPassTag">The value to assign to the password box's Tag property to indicate whether password generation was successful.</param>
+		/// <returns>If successful, the generated password; otherwise, an error string.</returns>
+		private string generateAdvancedPassword(out object txtPassTag) {
+			txtPassTag = "";
+
+			try {
+				txtPassTag = new PassGenerationResult { Successful = true };
+				return _passGen.GeneratePassword(txtFormatOfPass.Text);
+			}
+			catch (Exception ex) {
+				txtPassTag = new PassGenerationResult { Successful = false };
+				return "Error generating password: " + ex.Message;
 			}
 		}
 
@@ -157,17 +198,14 @@ namespace RandPass {
 			txtPass.BackColor = SystemColors.Window;
 
 			string passString = "";
-			try {
-				uint passLength;
-				if (!uint.TryParse((txtPassLength.Text == "" ? "0" : txtPassLength.Text), out passLength)) {
-					throw new Exception("Couldn't parse password length '" + txtPassLength.Text + "' as an integer!");
-				}
-				passString = _passGen.GeneratePassword((passLength == 0 ? 1 : passLength), chkCapLetters.Checked, chkSmlLetters.Checked, chkNumbers.Checked);
-				txtPass.Tag = new PassGenerationResult { Successful = true };
+			object txtPassTag;
+			if ((string)tabPassFormat.SelectedTab.Tag == "simple") {
+				passString = generateSimplePassword(out txtPassTag);
+				txtPass.Tag = txtPassTag;
 			}
-			catch (Exception ex) {
-				passString = "Error generating password: " + ex.Message;
-				txtPass.Tag = new PassGenerationResult { Successful = false };
+			else if ((string)tabPassFormat.SelectedTab.Tag == "advanced") {
+				passString = generateAdvancedPassword(out txtPassTag);
+				txtPass.Tag = txtPassTag;
 			}
 
 			sizePasswordBox(passString);
@@ -199,6 +237,15 @@ namespace RandPass {
 				// Copy to clipboard
 				Clipboard.SetText(txtPass.Text, TextDataFormat.Text);
 				_utils.ShowInfo("Password copied to clipboard.");
+			}
+		}
+
+		private void tabPassFormat_SelectedIndexChanged(object sender, EventArgs ea) {
+			if ((string)tabPassFormat.SelectedTab.Tag == "simple") {
+				txtPassLength.Enabled = true;
+			}
+			else if ((string)tabPassFormat.SelectedTab.Tag == "advanced") {
+				txtPassLength.Enabled = false;
 			}
 		}
 	}

@@ -11,6 +11,19 @@ namespace RandPass {
 		private char[] _uppercaseChars = new char[]  { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
 		private char[] _lowercaseChars = new char[]  { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 		private char[] _numeralChars = new char[]    { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+		private char[] _allChars;
+
+		#endregion
+
+		#region Private methods
+
+		private void initAllChars() {
+			var charCollection = new List<char>();
+			charCollection.AddRange(_uppercaseChars);
+			charCollection.AddRange(_lowercaseChars);
+			charCollection.AddRange(_numeralChars);
+			_allChars = charCollection.ToArray();
+		}
 
 		#endregion
 
@@ -21,6 +34,7 @@ namespace RandPass {
 		/// pseudo-random number generator's seed (see the System.Random class constructor).
 		/// </summary>
 		public PassGenerator() {
+			initAllChars();
 			_randNbr = new Random();
 		}
 
@@ -30,6 +44,7 @@ namespace RandPass {
 		/// </summary>
 		/// <param name="seed"></param>
 		public PassGenerator(int seed) {
+			initAllChars();
 			_randNbr = new Random(seed);
 		}
 
@@ -69,6 +84,50 @@ namespace RandPass {
 			for (uint i=0; i < length; i++) {
 				// eg. _randNbr.Next(0, 3) will return a number between 0-2 (upper bound of 3 is exclusive)
 				sbPass.Append(availableChars[_randNbr.Next(0, availableChars.Count)]);
+			}
+
+			return sbPass.ToString();
+		}
+
+		/// <summary>
+		/// Generates a random password according to the specified format.
+		/// The format syntax is as follows:
+		/// A doublequote character (") will result in a random uppercase letter.
+		/// A quote character (') will result in a random lowercase letter.
+		/// A circumflex character (^) will result in a random numeral.
+		/// An asterisk character (*) will result in a random character from one of the aforementioned character sets.
+		/// Any other character will stay the same in the output.
+		/// </summary>
+		/// <returns>The generated password.</returns>
+		public string GeneratePassword(string format) {
+			StringBuilder sbPass = new StringBuilder();
+
+			if (format.Length == 0) {
+				throw new Exception("Format of password must not be empty.");
+			}
+
+			foreach (char chr in format) {
+				switch (chr) {
+					case '"':
+					sbPass.Append(_uppercaseChars[_randNbr.Next(0, _uppercaseChars.Length)]);
+					break;
+
+					case '\'':
+					sbPass.Append(_lowercaseChars[_randNbr.Next(0, _lowercaseChars.Length)]);
+					break;
+
+					case '^':
+					sbPass.Append(_numeralChars[_randNbr.Next(0, _numeralChars.Length)]);
+					break;
+
+					case '*':
+					sbPass.Append(_allChars[_randNbr.Next(0, _allChars.Length)]);
+					break;
+
+					default:
+					sbPass.Append(chr);
+					break;
+				}
 			}
 
 			return sbPass.ToString();

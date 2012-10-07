@@ -24,10 +24,10 @@
 		/// </summary>
 		private void InitializeComponent() {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAbout));
-			this.lblAbout2 = new System.Windows.Forms.Label();
+			this.lblCopyright = new System.Windows.Forms.Label();
 			this.picGooeyLogo = new System.Windows.Forms.PictureBox();
 			this.lblLicence = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
+			this.lblLicenced = new System.Windows.Forms.Label();
 			this.txtGplLicence = new System.Windows.Forms.TextBox();
 			this.lnkGooeySite = new System.Windows.Forms.LinkLabel();
 			this.btnExit = new System.Windows.Forms.Button();
@@ -35,15 +35,15 @@
 			((System.ComponentModel.ISupportInitialize)(this.picGooeyLogo)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// lblAbout2
+			// lblCopyright
 			// 
-			this.lblAbout2.AutoSize = true;
-			this.lblAbout2.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblAbout2.Location = new System.Drawing.Point(143, 495);
-			this.lblAbout2.Name = "lblAbout2";
-			this.lblAbout2.Size = new System.Drawing.Size(175, 14);
-			this.lblAbout2.TabIndex = 4;
-			this.lblAbout2.Text = "Copyright © Gooey Software 2012";
+			this.lblCopyright.AutoSize = true;
+			this.lblCopyright.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblCopyright.Location = new System.Drawing.Point(143, 495);
+			this.lblCopyright.Name = "lblCopyright";
+			this.lblCopyright.Size = new System.Drawing.Size(175, 14);
+			this.lblCopyright.TabIndex = 4;
+			this.lblCopyright.Text = "Copyright © Gooey Software 2012";
 			// 
 			// picGooeyLogo
 			// 
@@ -64,15 +64,15 @@
 			this.lblLicence.TabIndex = 6;
 			this.lblLicence.Text = "The Random Password Generator";
 			// 
-			// label1
+			// lblLicenced
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(12, 32);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(138, 14);
-			this.label1.TabIndex = 7;
-			this.label1.Text = "Licenced under the GPLv3:";
+			this.lblLicenced.AutoSize = true;
+			this.lblLicenced.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblLicenced.Location = new System.Drawing.Point(12, 32);
+			this.lblLicenced.Name = "lblLicenced";
+			this.lblLicenced.Size = new System.Drawing.Size(138, 14);
+			this.lblLicenced.TabIndex = 7;
+			this.lblLicenced.Text = "Licenced under the GPLv3:";
 			// 
 			// txtGplLicence
 			// 
@@ -130,10 +130,10 @@
 			this.Controls.Add(this.btnExit);
 			this.Controls.Add(this.lnkGooeySite);
 			this.Controls.Add(this.txtGplLicence);
-			this.Controls.Add(this.label1);
+			this.Controls.Add(this.lblLicenced);
 			this.Controls.Add(this.lblLicence);
 			this.Controls.Add(this.picGooeyLogo);
-			this.Controls.Add(this.lblAbout2);
+			this.Controls.Add(this.lblCopyright);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
@@ -150,10 +150,10 @@
 
 		#endregion
 
-		private System.Windows.Forms.Label lblAbout2;
+		private System.Windows.Forms.Label lblCopyright;
 		private System.Windows.Forms.PictureBox picGooeyLogo;
 		private System.Windows.Forms.Label lblLicence;
-		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label lblLicenced;
 		private System.Windows.Forms.TextBox txtGplLicence;
 		private System.Windows.Forms.LinkLabel lnkGooeySite;
 		private System.Windows.Forms.Button btnExit;

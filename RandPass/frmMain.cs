@@ -16,10 +16,20 @@ namespace RandPass {
 
 		private const string _strStartGenerating = "Start generating";
 		private const string _strStopGenerating = "Stop generating";
-		private Utilities _utils { get; set; }
-		private PassGenerator _passGen { get; set; }
-		private Point _origPassBoxLocation { get; set; }
-		private Size _origPassBoxSize { get; set; }
+		private Utilities _utils;
+		private PassGenerator _passGen;
+		private Point _origPassBoxLocation;
+		private Size _origPassBoxSize;
+		private int _headerLabelY;
+		private int _headerTextboxY;
+
+		#endregion
+
+		#region Private classes and structs
+
+		private struct PassGenerationResult {
+			public bool Successful;
+		}
 
 		#endregion
 
@@ -29,6 +39,8 @@ namespace RandPass {
 			InitializeComponent();
 
 			_utils = new Utilities();
+			// As we start out with "simple" password generation selected, no seed is specified, so we should
+			// create a PassGenerator with no constructor input.
 			_passGen = new PassGenerator();
 			_origPassBoxLocation = txtPass.Location;
 			_origPassBoxSize = txtPass.Size;
@@ -123,32 +135,42 @@ namespace RandPass {
 			}
 		}
 
-		#endregion
+		private void displayCorrectHeader() {
+			// Position correctly
+			lblEnterRandSeed.Location = new Point(lblEnterRandSeed.Location.X, _headerLabelY);
+			txtRandSeed.Location = new Point(txtRandSeed.Location.X, _headerTextboxY);
+			lblBlankSeed.Location = new Point(lblBlankSeed.Location.X, _headerLabelY);
 
-		#region Private classes and structs
+			// Set correct visibility
+			if ((string)tabPassFormat.SelectedTab.Tag == "simple") {
+				lblEnterLength.Visible = true;
+				txtPassLength.Visible = true;
+				lblChars.Visible = true;
+				lblEnterRandSeed.Visible = false;
+				txtRandSeed.Visible = false;
+				lblBlankSeed.Visible = false;
 
-		private struct PassGenerationResult {
-			public bool Successful;
+				// Default to 8 characters length
+				txtPassLength.Text = "8";
+
+				// As we're in "simple" password generation mode, no seed is specified.
+				_passGen.ReInitRandomGenerator(null);
+			}
+			else if ((string)tabPassFormat.SelectedTab.Tag == "advanced") {
+				lblEnterLength.Visible = false;
+				txtPassLength.Visible = false;
+				lblChars.Visible = false;
+				lblEnterRandSeed.Visible = true;
+				txtRandSeed.Visible = true;
+				lblBlankSeed.Visible = true;
+
+				// Defualt to empty (systime-based seed)
+				txtRandSeed.Text = "";
+			}
 		}
 
-		#endregion
-
-		private void frmMain_Load(object sender, EventArgs ea) {
-			Assembly thisAssembly = Assembly.GetExecutingAssembly();
-
-			this.Text = this.Text.Replace("$ver", _utils.GetVersionString(thisAssembly, VersionStringType.MajorMinor));
-			resizeLines();
-
-			btnStartStop.Text = _strStartGenerating;
-			txtPass.Enabled = false;
-			txtPass.BackColor = SystemColors.Control;
-
-			txtPass.Tag = new PassGenerationResult { Successful = false };
-		}
-
-		private void textBox1_KeyDown(object sender, KeyEventArgs ea)
-		{
-			// Only allow numerals and various control characters to be typed into this box
+		private bool isValidNumeralTextboxKey(KeyEventArgs ea) {
+			// Only allow numerals and various control characters to be typed into a "numeral" textbox
 			Keys[] allowedKeys = new[] {
 				Keys.Up,
 				Keys.Down,
@@ -164,17 +186,42 @@ namespace RandPass {
 			};
 
 			if (ea.Modifiers == Keys.None && (ea.KeyValue >= 48 && ea.KeyValue <= 57)) {
-				return;
+				return true;
 			}
 
 			// Not a numeral; is it an allowed control character?
 			foreach (var key in allowedKeys) {
 				if (ea.KeyCode == key) {
-					return;
+					return true;
 				}
 			}
 
-			ea.SuppressKeyPress = true;
+			return false;
+		}
+
+		#endregion
+
+		private void frmMain_Load(object sender, EventArgs ea) {
+			Assembly thisAssembly = Assembly.GetExecutingAssembly();
+
+			// Display title version number
+			this.Text = this.Text.Replace("$ver", _utils.GetVersionString(thisAssembly, VersionStringType.MajorMinor));
+
+			// Make horizontal picturebox lines the right height
+			resizeLines();
+
+			// Record header heights
+			_headerLabelY = lblEnterLength.Location.Y;
+			_headerTextboxY = txtPassLength.Location.Y;
+
+			// Setup controls initially
+			btnStartStop.Text = _strStartGenerating;
+			txtPass.Enabled = false;
+			txtPass.BackColor = SystemColors.Control;
+
+			displayCorrectHeader();
+
+			txtPass.Tag = new PassGenerationResult { Successful = false };
 		}
 
 		private void btnAbout_Click(object sender, EventArgs ea) {
@@ -241,11 +288,31 @@ namespace RandPass {
 		}
 
 		private void tabPassFormat_SelectedIndexChanged(object sender, EventArgs ea) {
-			if ((string)tabPassFormat.SelectedTab.Tag == "simple") {
-				txtPassLength.Enabled = true;
-			}
-			else if ((string)tabPassFormat.SelectedTab.Tag == "advanced") {
-				txtPassLength.Enabled = false;
+			displayCorrectHeader();
+		}
+
+		private void txtPassLength_KeyDown(object sender, KeyEventArgs ea)
+		{
+			ea.SuppressKeyPress = !isValidNumeralTextboxKey(ea);
+		}
+
+		private void txtRandSeed_KeyDown(object sender, KeyEventArgs ea) {
+			ea.SuppressKeyPress = !isValidNumeralTextboxKey(ea);
+		}
+
+		private void txtRandSeed_TextChanged(object sender, EventArgs ea) {
+			TextBox txtRandSeed = (TextBox)sender;
+
+			// If rand seed textbox contains some number, use that as the seed for password generation
+			if (!string.IsNullOrEmpty(txtRandSeed.Text)) {
+				// If the new value of the textbox is greater than (2^31)-1, set it to that or it will overflow
+				// the max. value of an integer.
+				if (long.Parse(txtRandSeed.Text) > 2147483647L) {
+					txtRandSeed.Text = "2147483647";
+					txtRandSeed.SelectionStart = txtRandSeed.Text.Length;
+				}
+
+				_passGen.ReInitRandomGenerator(int.Parse(txtRandSeed.Text));
 			}
 		}
 	}

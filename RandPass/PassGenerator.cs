@@ -133,6 +133,19 @@ namespace RandPass {
 			return sbPass.ToString();
 		}
 
+		/// <summary>
+		/// Reinitializes the pseudo-random number generator used for password generation.
+		/// </summary>
+		/// <param name="seed">If this is null, uses a time-dependent value as the seed.  Otherwise, uses the specified value as the seed.</param>
+		public void ReInitRandomGenerator(int? seed) {
+			if (seed.HasValue) {
+				_randNbr = new Random(seed.Value);
+			}
+			else {
+				_randNbr = new Random();
+			}
+		}
+
 		#endregion
 	}
 }

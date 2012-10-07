@@ -87,7 +87,6 @@
 			this.txtGplLicence.Size = new System.Drawing.Size(306, 338);
 			this.txtGplLicence.TabIndex = 8;
 			this.txtGplLicence.TabStop = false;
-			this.txtGplLicence.Text = resources.GetString("txtGplLicence.Text");
 			// 
 			// lnkGooeySite
 			// 

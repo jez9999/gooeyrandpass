@@ -14,6 +14,7 @@ namespace RandPass {
 	public partial class frmMain : Form {
 		#region Private members
 
+		private Assembly _thisAssembly;
 		private const string _strStartGenerating = "Start generating";
 		private const string _strStopGenerating = "Stop generating";
 		private Utilities _utils;
@@ -202,10 +203,10 @@ namespace RandPass {
 		#endregion
 
 		private void frmMain_Load(object sender, EventArgs ea) {
-			Assembly thisAssembly = Assembly.GetExecutingAssembly();
+			_thisAssembly = Assembly.GetExecutingAssembly();
 
 			// Display title version number
-			this.Text = this.Text.Replace("$ver", _utils.GetVersionString(thisAssembly, VersionStringType.MajorMinor));
+			this.Text = this.Text.Replace("$ver", _utils.GetVersionString(_thisAssembly, VersionStringType.MajorMinor));
 
 			// Make horizontal picturebox lines the right height
 			resizeLines();

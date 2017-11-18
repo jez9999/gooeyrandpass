@@ -283,8 +283,13 @@ namespace RandPass {
 			}
 			else {
 				// Copy to clipboard
-				Clipboard.SetText(txtPass.Text, TextDataFormat.Text);
-				_utils.ShowInfo("Password copied to clipboard.");
+				try {
+					Clipboard.SetText(txtPass.Text, TextDataFormat.Text);
+					_utils.ShowInfo("Password copied to clipboard.");
+				}
+				catch (Exception ex) {
+					_utils.ShowError("Couldn't copy password to clipboard: " + ex.Message);
+				}
 			}
 		}
 

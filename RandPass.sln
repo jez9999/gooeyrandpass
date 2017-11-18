@@ -1,8 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandPass", "RandPass\RandPass.csproj", "{1DE56B8C-004A-4471-BFA9-E1BB2BF74C81}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2EA88635-DB2C-407A-ABF5-12DA36D40252}"
 	ProjectSection(SolutionItems) = preProject
 		_readme.txt = _readme.txt
@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Libs", "_Libs", "{BE6B617F
 		_Libs\GooeyUtilities.dll = _Libs\GooeyUtilities.dll
 		_Libs\GooeyUtilities.pdb = _Libs\GooeyUtilities.pdb
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandPass", "RandPass\RandPass.csproj", "{1DE56B8C-004A-4471-BFA9-E1BB2BF74C81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

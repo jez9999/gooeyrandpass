@@ -43,7 +43,7 @@
 			this.lblCopyright.Name = "lblCopyright";
 			this.lblCopyright.Size = new System.Drawing.Size(175, 14);
 			this.lblCopyright.TabIndex = 4;
-			this.lblCopyright.Text = "Copyright © Gooey Software 2012";
+			this.lblCopyright.Text = "Copyright © Gooey Software 2017";
 			// 
 			// picGooeyLogo
 			// 
@@ -94,7 +94,7 @@
 			this.lnkGooeySite.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lnkGooeySite.Location = new System.Drawing.Point(180, 509);
 			this.lnkGooeySite.Name = "lnkGooeySite";
-			this.lnkGooeySite.Size = new System.Drawing.Size(138, 14);
+			this.lnkGooeySite.Size = new System.Drawing.Size(137, 14);
 			this.lnkGooeySite.TabIndex = 10;
 			this.lnkGooeySite.TabStop = true;
 			this.lnkGooeySite.Text = "www.gooeysoftware.com";

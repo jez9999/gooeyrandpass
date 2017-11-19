@@ -52,7 +52,7 @@ namespace RandPass {
 
 		private void lnkGooeySite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs ea) {
 			// Navigate to Gooey Software website
-			System.Diagnostics.Process.Start("http://www.gooeysoftware.com/");
+			System.Diagnostics.Process.Start("https://www.gooeysoftware.com/");
 		}
 
 		private void btnExit_Click(object sender, EventArgs e) {

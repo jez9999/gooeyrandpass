@@ -138,7 +138,7 @@
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "frmAbout";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "About...";
 			this.Load += new System.EventHandler(this.frmAbout_Load);
 			((System.ComponentModel.ISupportInitialize)(this.picGooeyLogo)).EndInit();
